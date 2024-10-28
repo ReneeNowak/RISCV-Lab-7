@@ -46,15 +46,16 @@ loop_start:
     beq s5 s2 loop_end
 
 loop_body:
-    ## Fill in code here
-    # Check inner loop condition
-    # 1. Load pointer s0
-    # 2. Move by s0 by stride factor s3.
-    # 3. Load pointer s1. (2nd vector)
-    # 4. Incremenent by stride factor s4.
-    # 5. Multiply and Add. Accumulate into a0 
-    # 6. Increment loop index.
-    # 7. Jump to beginning of loop
+
+    lw s6, 0 (s0)
+    add s0, s0, s3 #first array iter
+    lw s7, 0 (s1)
+    add s1, s1, s4 #second array iter
+
+    mul s6, s6, s7 
+    add a0, a0, s6 #multply the inputs - store in sum variable a0
+    addi s5, s5, 1 #increment loop counter
+    j loop_start
 
 loop_end:
 
